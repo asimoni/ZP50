@@ -1,0 +1,14 @@
+﻿@using HtmlHelpers.BeginCollectionItem
+@model ZP50.Core.Oratorio.QuotaAcquistata
+@using (Html.BeginCollectionItem("QuoteAcquistate"))
+{
+<div class="list-group-item">
+    <strong>@Model.QuotaPartecipazione.Descrizione</strong>
+    @Html.HiddenFor(model => model.QuotaPartecipazioneID)
+    @Html.HiddenFor(model => model.PartecipanteID)
+    @Html.TextBoxFor(model => model.Versato)
+    <a href="#" id="deleteRow" class="deleteRow" onclick="deleteFunction()">Rimuovi</a>
+</div>
+
+
+}

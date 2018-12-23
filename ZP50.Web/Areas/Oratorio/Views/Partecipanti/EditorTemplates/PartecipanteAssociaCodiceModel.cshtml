@@ -1,0 +1,34 @@
+﻿@using ZP50.Web.Areas.Oratorio.Models
+@model PartecipanteAssociaCodiceModel
+<div class="modal fade" id="associaCodice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Associa Codice Identificativo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PartecipanteId)
+
+                        @Html.EditorFor(model => model.PartecipanteId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PartecipanteId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CodiceIdentificativo)
+
+                        @Html.EditorFor(model => model.CodiceIdentificativo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CodiceIdentificativo, "", new { @class = "text-danger" })
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                <button type="submit" class="btn btn-primary">Associa</button>
+            </div>
+        </div>
+    </div>
+</div>

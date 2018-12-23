@@ -1,0 +1,26 @@
+﻿@using HtmlHelpers.BeginCollectionItem
+@model ZP50.Core.Oratorio.Recapito
+@using (Html.BeginCollectionItem("Recapiti"))
+{
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.PartecipanteID)
+
+    <div class="row">
+        <div class="col">
+            @Html.TextBoxFor(model => model.TipoRecapito, new { @class = "form-control" })
+        </div>
+        <div class="col">
+            @Html.TextBoxFor(model => model.Valore, new { @class = "form-control" })
+        </div>
+        <div class="col">
+            @Html.TextBoxFor(model => model.Note, new { @class = "form-control" })
+        </div>
+        <div class="col">
+            <a href="#" id="deleteRow" class="deleteRow" onclick="deleteFunction()">Rimuovi</a>
+        </div>
+    </div>
+
+
+
+
+}

@@ -1,0 +1,25 @@
+﻿@using ZP50.Web.Areas.Oratorio.Models
+@model PartecipanteAssociaCodiceModel
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Partecipante</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PartecipanteId)
+        <i class="fa fa-3x fa-qrcode"></i>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CodiceIdentificativo)
+
+            @Html.EditorFor(model => model.CodiceIdentificativo, new { htmlAttributes = new { @class = "form-control", autofocus="" } })
+            @Html.ValidationMessageFor(model => model.CodiceIdentificativo, "", new { @class = "text-danger" })
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        @Html.ActionLink("Annulla", "Edit", new { id = Model.PartecipanteId }, new { @class = "btn" })
+        <button type="submit" class="btn btn-primary">Associa</button>
+    </div>
+}
