@@ -69,7 +69,7 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
             }
             Partecipante partecipante = db.Partecipanti
                 .Include(p => p.QuoteAcquistate)
-                .Include(p => p.Recapiti)
+                .Include(p => p.Contatti)
                 .First(x => x.ID == id);
             if (partecipante == null)
             {
@@ -95,48 +95,48 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
             return View(partecipante);
         }
 
-    //    private void Update(Partecipante model) { 
-    //        var existingParent = db.Partecipanti
-    //    .Where(p => p.ID == model.ID)
-    //    .Include(p => p.QuoteAcquistate)
-    //    .SingleOrDefault();
+        //    private void Update(Partecipante model) { 
+        //        var existingParent = db.Partecipanti
+        //    .Where(p => p.ID == model.ID)
+        //    .Include(p => p.QuoteAcquistate)
+        //    .SingleOrDefault();
 
-    //if (existingParent != null)
-    //{
-    //    // Update parent
-    //    db.Entry(existingParent).CurrentValues.SetValues(model);
+        //if (existingParent != null)
+        //{
+        //    // Update parent
+        //    db.Entry(existingParent).CurrentValues.SetValues(model);
 
-    //    // Delete children
-    //    foreach (var existingChild in existingParent.Children.ToList())
-    //    {
-    //        if (!model.Children.Any(c => c.Id == existingChild.Id))
-    //            _dbContext.Children.Remove(existingChild);
-    //    }
+        //    // Delete children
+        //    foreach (var existingChild in existingParent.Children.ToList())
+        //    {
+        //        if (!model.Children.Any(c => c.Id == existingChild.Id))
+        //            _dbContext.Children.Remove(existingChild);
+        //    }
 
-    //    // Update and Insert children
-    //    foreach (var childModel in model.Children)
-    //    {
-    //        var existingChild = existingParent.Children
-    //            .Where(c => c.Id == childModel.Id)
-    //            .SingleOrDefault();
+        //    // Update and Insert children
+        //    foreach (var childModel in model.Children)
+        //    {
+        //        var existingChild = existingParent.Children
+        //            .Where(c => c.Id == childModel.Id)
+        //            .SingleOrDefault();
 
-    //        if (existingChild != null)
-    //            // Update child
-    //            _dbContext.Entry(existingChild).CurrentValues.SetValues(childModel);
-    //        else
-    //        {
-    //            // Insert child
-    //            var newChild = new Child
-    //            {
-    //                Data = childModel.Data,
-    //                //...
-    //            };
-    //existingParent.Children.Add(newChild);
-    //        }
-    //    }
+        //        if (existingChild != null)
+        //            // Update child
+        //            _dbContext.Entry(existingChild).CurrentValues.SetValues(childModel);
+        //        else
+        //        {
+        //            // Insert child
+        //            var newChild = new Child
+        //            {
+        //                Data = childModel.Data,
+        //                //...
+        //            };
+        //existingParent.Children.Add(newChild);
+        //        }
+        //    }
 
-    //    _dbContext.SaveChanges();
-    //}
+        //    _dbContext.SaveChanges();
+        //}
 
         // GET: Oratorio/Partecipanti/Delete/5
         public ActionResult Delete(int? id)
@@ -167,7 +167,7 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
 
         public ActionResult AssociaCodice(int id)
         {
-            return View(new PartecipanteAssociaCodiceModel { PartecipanteId=id });
+            return View(new PartecipanteAssociaCodiceModel { PartecipanteId = id });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -202,26 +202,159 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
 
         }
 
-        public ActionResult AggiungiQuota(int id, int partecipanteId)
+        #region Quote
+
+        public ActionResult Quote(int id)
         {
-            var quota = db.QuotePartecipazione.FirstOrDefault(x => x.ID == id);
-            var model = new QuotaAcquistata {
-                QuotaPartecipazioneID = quota.ID,
-                PartecipanteID=partecipanteId,
-                QuotaPartecipazione = quota };
-            return PartialView("_QuotaAcquistata", model);
+            Partecipante partecipante = db.Partecipanti.Include("QuoteAcquistate").Single(x => x.ID == id);
+            var model = partecipante.QuoteAcquistate;
+            return View(partecipante);
         }
 
-        public ActionResult AggiungiRecapito(int partecipanteID)
+        public ActionResult AggiungiQuota(int partecipanteID)
         {
-            var model = new Recapito
+            var partecipante = db.Partecipanti.Include("QuoteAcquistate").Single(x => x.ID == partecipanteID);
+            var quote = db.QuotePartecipazione.ToList();
+            var quoteAcquistate = partecipante.QuoteAcquistate.Select(x => x.QuotaPartecipazione).ToArray();
+            var model = new PartecipanteAggiungiQuotaModel
             {
-                PartecipanteID=partecipanteID
+                PartecipanteID = partecipanteID,
+                QuoteDaAcquistare = quote.Except(quoteAcquistate).Select(x => new QuotaDaAcquistareModel
+                {
+                    Descrizione = x.Descrizione,
+                    Costo = x.Costo,
+                    ID = x.ID
+                }).ToArray()
             };
-            db.Recapiti.Add(model);
-            db.SaveChanges();
-            return PartialView("_Recapito", model);
+            return View(model);
         }
+
+        public ActionResult AggiornaQuota(int partecipanteID, int quotaID)
+        {
+            var quota = db.QuoteAcquistate.First(x => x.PartecipanteID == partecipanteID && x.QuotaPartecipazioneID == quotaID);
+
+            return View(quota);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AggiornaQuota(QuotaAcquistata model)
+        {
+            if (ModelState.IsValid)
+            {
+                var quota = db.QuoteAcquistate.First(x => x.PartecipanteID == model.PartecipanteID && x.QuotaPartecipazioneID == model.QuotaPartecipazioneID);
+                quota.Versato = model.Versato;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Quote", new { id = model.PartecipanteID });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AggiungiQuota(PartecipanteAggiungiQuotaModel model)
+        {
+            var partecipante = db.Partecipanti.Find(model.PartecipanteID);
+            foreach (var item in model.QuoteDaAcquistare.Where(x => x.Aggiungi))
+            {
+                var quota = new QuotaAcquistata
+                {
+                    QuotaPartecipazioneID = item.ID,
+                    PartecipanteID = partecipante.ID,
+                    Versato = item.Versato
+                };
+                partecipante.QuoteAcquistate.Add(quota);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Quote", new { id = partecipante.ID });
+        }
+
+        public ActionResult RimuoviQuota(int quotaID, int partecipanteID)
+        {
+
+            var partecipante = db.Partecipanti.Find(partecipanteID);
+            var quota = partecipante.QuoteAcquistate.Single(x => x.QuotaPartecipazioneID == quotaID);
+
+            partecipante.QuoteAcquistate.Remove(quota);
+            db.SaveChanges();
+            return RedirectToAction("Quote", new { id = partecipanteID });
+        }
+
+        #endregion
+
+
+        #region Contatti
+        public ActionResult Contatti(int id)
+        {
+            Partecipante partecipante = db.Partecipanti.Include("Contatti").Single(x => x.ID == id);
+            var model = partecipante.Contatti;
+            return View(partecipante);
+        }
+
+        public ActionResult SuggerisciContatti(int partecipanteID, string nome, string cognome)
+        {
+            var model = new PartecipanteSuggerimentoContattiModel
+            {
+                PartecipanteID = partecipanteID,
+                Contatti = db.Contatti.Where(x => x.Nome.StartsWith(nome) && x.Cognome.StartsWith(cognome)).ToList()
+
+            };
+
+            return PartialView("_SuggerisciContatti", model);
+        }
+
+        public ActionResult AggiungiContatto(int partecipanteID)
+        {
+            return View(new PartecipanteAggiungiContattoModel { PartecipanteID = partecipanteID });
+        }
+
+        public ActionResult RimuoviContatto(int partecipanteID, int contattoID)
+        {
+            var partecipante = db.Partecipanti.Find(partecipanteID);
+            var contatto = partecipante.Contatti.Single(x => x.ID == contattoID);
+            partecipante.Contatti.Remove(contatto);
+            db.SaveChanges();
+            return RedirectToAction("Contatti", new { id = partecipanteID });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AggiungiContatto(PartecipanteAggiungiContattoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var partecipante = db.Partecipanti.Find(model.PartecipanteID);
+                var contatto = new Contatto
+                {
+                    Cognome = model.Cognome,
+                    Nome = model.Nome,
+                    Telefono = model.Telefono,
+                    Email = model.Email
+                };
+                partecipante.Contatti.Add(contatto);
+                db.Contatti.Add(contatto);
+                db.SaveChanges();
+                contatto.Partecipanti.Add(partecipante);
+                db.SaveChanges();
+                return RedirectToAction("Contatti", new { id = model.PartecipanteID });
+
+            }
+
+            return View(model);
+
+        }
+
+        public ActionResult AggiungiContattoSuggerito(int partecipanteID, int contattoID)
+        {
+            var partecipante = db.Partecipanti.Find(partecipanteID);
+            var contatto = db.Contatti.Find(contattoID);
+            partecipante.Contatti.Add(contatto);
+            db.SaveChanges();
+            return RedirectToAction("Contatti", new { id = partecipanteID });
+
+        }
+
+        #endregion
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

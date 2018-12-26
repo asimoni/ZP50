@@ -24,7 +24,7 @@ namespace ZP50.Core.Oratorio
         public string Annotazioni { get; set; }
 
         public string CodiceIdentificativo { get; set; }
-        public virtual ICollection<Recapito> Recapiti { get; set; }
+        public virtual ICollection<Contatto> Contatti { get; set; }
         public virtual ICollection<QuotaAcquistata> QuoteAcquistate { get; set; }
     }
 
@@ -51,13 +51,20 @@ namespace ZP50.Core.Oratorio
         public bool Vendibile { get; set; }
     }
 
-    public class Recapito
+    public class Contatto
     {
         public int ID { get; set; }
-        public int PartecipanteID { get; set; }
-        public string TipoRecapito { get; set; }
-        public string Valore { get; set; }
-        public string Note { get; set; }
+        [Required]
+        public string Nome { get; set; }
+        [Required]
+        public string Cognome { get; set; }
+        [Required]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Immettere un numero di telefono valido")]
+        public string Telefono { get; set; }
+        [EmailAddress(ErrorMessage = "Immettere un indirizzo e-mail valido")]
+        public string Email { get; set; }
+
+        public virtual ICollection<Partecipante> Partecipanti { get; set; }
     }
 
     public class Presenza

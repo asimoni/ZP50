@@ -33,8 +33,10 @@ namespace ZP50.Core.DataLayer
             modelBuilder.Entity<QuotaPartecipazione>().ToTable("QuotePartecipazione");
         }
 
-        public DbSet<ZP50.Core.Oratorio.Recapito> Recapiti { get; set; }
+        public DbSet<Contatto> Contatti { get; set; }
 
         public DbSet<ZP50.Core.Oratorio.QuotaPartecipazione> QuotePartecipazione { get; set; }
+        public DbSet<ZP50.Core.Oratorio.QuotaAcquistata> QuoteAcquistate { get; set; }
+
     }
 }

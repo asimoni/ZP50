@@ -1,0 +1,15 @@
+﻿@model ZP50.Web.Areas.Oratorio.Models.PartecipanteSuggerimentoContattiModel
+<div class="list-group">
+    @foreach (var item in Model.Contatti)
+    {
+        <a class="list-group-item" href="@Url.Action("AggiungiContattoSuggerito", new { partecipanteID = Model.PartecipanteID, contattoID = item.ID })">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@item.Cognome @item.Nome</h5>
+            </div>
+            <div>
+                <span><i class="fa fa-mobile"></i> @item.Telefono</span>
+                <span><i class="fa fa-envelope-o"></i> @item.Email</span>
+            </div>
+        </a>
+    }
+</div>

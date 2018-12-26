@@ -1,0 +1,31 @@
+﻿@model ZP50.Web.Areas.Administration.Models.UserRolesModel
+@{
+    ViewBag.Title = "EditRoles";
+}
+
+<h2>EditRoles</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Email)
+
+    for (int i = 0; i < Model.Roles.Length; i++)
+    {
+
+        <div class="form-check">
+            @Html.CheckBoxFor(model => model.Roles[i].Selected, new { @class = "form-check-input" })
+            @Html.HiddenFor(model => model.Roles[i].RoleName)
+            <label class="form-check-label">
+                @Model.Roles[i].RoleName
+            </label>
+        </div>
+
+    }
+    <hr />
+    <div class="d-flex justify-content-between">
+        @Html.ActionLink("Indietro", "Index")
+        <input type="submit" value="Salva" class="btn btn-primary" />
+    </div>
+}
+

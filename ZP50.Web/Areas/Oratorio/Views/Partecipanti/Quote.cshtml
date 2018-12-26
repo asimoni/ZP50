@@ -1,0 +1,50 @@
+﻿
+@model ZP50.Core.Oratorio.Partecipante
+@{
+    ViewBag.Title = "Quote";
+}
+
+<h2>Partecipante</h2>
+<ul class="nav nav-pills mb-1">
+    <li class="nav-item ">
+        <a class="nav-link " href="@Url.Action("Edit", new { id = Model.ID })">Anagrafica</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Contatti", new { id = Model.ID })">Contatti</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="@Url.Action("Quote", new { id = Model.ID })">Quote</a>
+    </li>
+</ul>
+<div class="list-group m-1">
+    @foreach (var item in Model.QuoteAcquistate)
+    {
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5>@item.QuotaPartecipazione.Descrizione <small>@item.QuotaPartecipazione.Costo.ToString("C")</small></h5>
+                <div>
+                    <a href="@Url.Action("AggiornaQuota", new {quotaID=item.QuotaPartecipazioneID, partecipanteID=Model.ID})" class="btn btn-outline-secondary"><i class="fa fa-pencil"></i></a>
+                    <a href="@Url.Action("RimuoviQuota", new {quotaID=item.QuotaPartecipazioneID, partecipanteID=item.PartecipanteID})" class="btn btn-outline-secondary"><i class="fa fa-trash-o"></i></a>
+                </div>
+            </div>
+            <p>
+                @if (item.Versato >= item.QuotaPartecipazione.Costo)
+                {
+                    <span class="badge badge-success">@item.Versato.ToString("C")</span>
+                }
+                else
+                {
+                    <span class="badge badge-warning">@item.Versato.ToString("C")</span>
+
+                }
+            </p>
+        </div>
+    }
+</div>
+<div class="m-1 d-flex flex-row-reverse">
+    <a href="@Url.Action("AggiungiQuota", new { partecipanteID = Model.ID })" class="btn btn-success"><i class="fa fa-plus"></i> Aggiungi</a>
+</div>
+
+
+
+
