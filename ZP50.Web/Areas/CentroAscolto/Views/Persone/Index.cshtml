@@ -1,0 +1,23 @@
+﻿@using ZP50.Core.CentroAscolto
+@model IEnumerable<Persona>
+<div class="card">
+    <div class="card-body">
+        <h5>Membri</h5>
+
+        <div class="list-group list-group-flush">
+            @foreach (var item in Model)
+        {
+            <a href="@Url.Action("Edit", new { id = item.ID })" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@item.Cognome @item.Nome</h5>
+                    <small>@item.SexLetter() @item.PrintableAge()</small>
+            </div>
+            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            <small>Donec id elit non mi porta.</small>
+        </a>
+}
+        </div>
+    </div>    <div class="card-footer">
+        @Html.ActionLink("Aggiungi", "Create", new { nucleoFamiliareId = "" })
+    </div>
+</div>

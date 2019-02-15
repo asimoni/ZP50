@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ZP50.Core.CentroAscolto.SchedaIncontro>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NucleoFamiliareID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sintesi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreataIl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreataDa)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NucleoFamiliareID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sintesi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreataIl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreataDa)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

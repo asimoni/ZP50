@@ -208,6 +208,11 @@
     <Compile Include="Areas\Administration\Controllers\RuoliController.cs" />
     <Compile Include="Areas\Administration\Controllers\UtentiController.cs" />
     <Compile Include="Areas\Administration\Models\UserRolesModel.cs" />
+    <Compile Include="Areas\CentroAscolto\CentroAscoltoAreaRegistration.cs" />
+    <Compile Include="Areas\CentroAscolto\Controllers\HomeController.cs" />
+    <Compile Include="Areas\CentroAscolto\Controllers\NucleiFamiliariController.cs" />
+    <Compile Include="Areas\CentroAscolto\Controllers\PersoneController.cs" />
+    <Compile Include="Areas\CentroAscolto\Controllers\SchedeIncontriController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -275,6 +280,8 @@
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\caring.png" />
+    <Content Include="Content\images\qr.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -372,6 +379,32 @@
     <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administration\Views\Utenti\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Utenti\EditRoles.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\web.config" />
+    <Content Include="Areas\CentroAscolto\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\Create.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\Delete.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\Details.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\Edit.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\Index.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\Create.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\Delete.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\Details.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\Edit.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\Index.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\SchedeIncontri\Create.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\SchedeIncontri\Delete.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\SchedeIncontri\Details.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\SchedeIncontri\Edit.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\SchedeIncontri\Index.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Shared\EditorTemplates\Indirizzo.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Shared\DisplayTemplates\Indirizzo.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\EditorTemplates\DichiarazioneIsee.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\NucleiFamiliari\DisplayTemplates\DichiarazioneIsee.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\EditorTemplates\DocumentoIdentita.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\DisplayTemplates\DocumentoIdentita.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Persone\EditorTemplates\InfoOccupazione.cshtml" />
+    <Content Include="Areas\CentroAscolto\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\i18n\af.js" />
@@ -519,6 +552,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administration\Views\Ruoli\" />
+    <Folder Include="Areas\CentroAscolto\Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

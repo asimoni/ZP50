@@ -1,0 +1,47 @@
+﻿@model ZP50.Core.CentroAscolto.NucleoFamiliare
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-horizontal">
+                        <h5>Nucleo Familiare</h5>
+                        <hr />
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="label">@Html.DisplayNameFor(model => model.Nome)</div>
+                                    <h4>@Html.DisplayFor(model => model.Nome)</h4>
+                                </div>
+                                @Html.DisplayFor(model => model.Residenza, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Annotazioni)
+                                    @Html.TextAreaFor(model => model.Annotazioni, new { @class = "form-control-plaintext" })
+                                </div>
+                            </div>
+                        </div>
+                        @Html.DisplayFor(model => model.DichiarazioneIsee, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    @Html.ActionLink("Indietro", "Index", "NucleiFamiliari")
+                    @Html.ActionLink("Modifica", "Edit", "NucleiFamiliari", new { id = Model.ID }, new { @class="btn btn-primary"})
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        @Html.Action("Index", "Persone", new { nucleoFamiliareId=Model.ID})
+    </div>
+</div>
+

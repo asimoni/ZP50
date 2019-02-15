@@ -1,0 +1,39 @@
+﻿@using ZP50.Core.Common;
+@model DocumentoIdentita
+<div class="p-2 bg-light">
+
+
+    <fieldset>
+        <legend>Documento identità</legend>
+
+        <div class="form-row">
+            <div class="form-group col">
+                @Html.LabelFor(model => model.Tipo)
+                @Html.EnumDropDownListFor(model => model.Tipo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col">
+                @Html.LabelFor(model => model.Identificativo)
+                @Html.EditorFor(model => model.Identificativo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Identificativo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                @Html.LabelFor(model => model.RilaciatoDa)
+                @Html.EditorFor(model => model.RilaciatoDa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RilaciatoDa, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col">
+                @Html.LabelFor(model => model.Comune)
+                @Html.EditorFor(model => model.Comune, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comune, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col">
+                @Html.LabelFor(model => model.DataScadenza)
+                @Html.EditorFor(model => model.DataScadenza, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DataScadenza, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </fieldset>
+</div>

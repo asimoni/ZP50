@@ -1,1 +1,28 @@
-﻿
+﻿html {
+    font-size: 14px;
+}
+body{
+    background-color:#ddd;
+}
+body, html {
+    height: 100%;
+}
+.body-content {
+    height: 100%;
+}
+.bg-ascolto {
+    /* The image used */
+    background-image: url("images/caring.png");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.opacity-50 {
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}

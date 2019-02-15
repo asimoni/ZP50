@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using ZP50.Core.CentroAscolto;
 using ZP50.Core.Migrations;
 using ZP50.Core.Oratorio;
 
 namespace ZP50.Core.DataLayer
 {
-
-    public class OratorioContext : DbContext
+    public class CentroAscoltoContext : DbContext
     {
-        public OratorioContext() : base()
+        public CentroAscoltoContext() : base()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<OratorioContext, Configuration>());
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<CentroAscoltoContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CentroAscoltoContext, CentroAscoltoConfiguration>());
 
         }
 
-        public DbSet<Partecipante> Partecipanti { get; set; }
-        public DbSet<Presenza> Presenze { get; set; }
+        public DbSet<NucleoFamiliare> NucleiFamiliari { get; set; }
+        public DbSet<Persona> Persone { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -38,5 +33,6 @@ namespace ZP50.Core.DataLayer
         public DbSet<ZP50.Core.Oratorio.QuotaPartecipazione> QuotePartecipazione { get; set; }
         public DbSet<ZP50.Core.Oratorio.QuotaAcquistata> QuoteAcquistate { get; set; }
 
+        public System.Data.Entity.DbSet<ZP50.Core.CentroAscolto.SchedaIncontro> SchedaIncontroes { get; set; }
     }
 }

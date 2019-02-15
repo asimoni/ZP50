@@ -47,7 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CentroAscolto\DichiarazioneIsee.cs" />
+    <Compile Include="CentroAscolto\InfoOccupazione.cs" />
+    <Compile Include="CentroAscolto\NucleoFamiliare.cs" />
+    <Compile Include="CentroAscolto\Persona.cs" />
+    <Compile Include="CentroAscolto\Richiesta.cs" />
+    <Compile Include="CentroAscolto\SchedaIncontro.cs" />
+    <Compile Include="Common\DocumentoIdentita.cs" />
     <Compile Include="Common\Indirizzo.cs" />
+    <Compile Include="DataLayer\CentroAscoltoContext.cs" />
     <Compile Include="DataLayer\OratorioContext.cs" />
     <Compile Include="Migrations\201812132046429_InitialCreate.cs" />
     <Compile Include="Migrations\201812132046429_InitialCreate.Designer.cs">
@@ -66,5 +74,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

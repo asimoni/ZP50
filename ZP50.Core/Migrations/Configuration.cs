@@ -22,4 +22,26 @@ namespace ZP50.Core.Migrations
             //  to avoid creating duplicate seed data.
         }
     }
+
+
+
+
+
+    internal sealed class CentroAscoltoConfiguration : DbMigrationsConfiguration<ZP50.Core.DataLayer.CentroAscoltoContext>
+    {
+        public CentroAscoltoConfiguration()
+        {
+            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = true;
+            ContextKey = "ZP50.Core.DataLayer.CentroAscoltoContext";
+        }
+
+        protected override void Seed(ZP50.Core.DataLayer.CentroAscoltoContext context)
+        {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data.
+        }
+    }
 }

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ZP50.Core.CentroAscolto.NucleoFamiliare>
+
+@{
+    ViewBag.Title = "Nuclei familiari";
+}
+
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <h5>Nuclei familiari</h5>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Residenza)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DichiarazioneIsee)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.AggiornataIl)
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Residenza)
+                            </td>
+                            <td>
+                                @if (item.DichiarazioneIsee.IsScaduta())
+                                {
+                                    <span class="badge badge-danger">SCADUTA</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">VALIDA</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AggiornataIl)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Visualizza", "Details", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    @Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-success" })
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

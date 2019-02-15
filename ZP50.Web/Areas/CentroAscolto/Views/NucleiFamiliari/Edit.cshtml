@@ -1,0 +1,81 @@
+﻿@model ZP50.Core.CentroAscolto.NucleoFamiliare
+
+@{
+    ViewBag.Title = "Nucleo Familiare";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <div class="form-horizontal">
+                <h4>NucleoFamiliare</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nome)
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Residenza)
+                        @Html.EditorFor(model => model.Residenza, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Residenza, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Annotazioni)
+                        @Html.EditorFor(model => model.Annotazioni, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Annotazioni, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CodiceIdentificativo)
+                        @Html.EditorFor(model => model.CodiceIdentificativo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CodiceIdentificativo, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DichiarazioneIsee)
+                        @Html.EditorFor(model => model.DichiarazioneIsee, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DichiarazioneIsee, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreataIl)
+                        @Html.EditorFor(model => model.CreataIl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreataIl, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreataDa)
+                        @Html.EditorFor(model => model.CreataDa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreataDa, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AggiornataIl)
+                        @Html.EditorFor(model => model.AggiornataIl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AggiornataIl, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AggiornataDa)
+                        @Html.EditorFor(model => model.AggiornataDa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AggiornataDa, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                @Html.ActionLink("Indietro", "Details", "NucleiFamiliari", new { id = Model.ID }, null)
+                <input type="submit" value="Salva" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
