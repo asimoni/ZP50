@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/site-css")
+    <link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css">
 </head>
 <body>
     @Html.Partial("_TopNavBar")
@@ -18,6 +19,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/datatables.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

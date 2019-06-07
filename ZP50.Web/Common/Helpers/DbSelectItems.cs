@@ -9,11 +9,11 @@ namespace ZP50.Web.Common.Helpers
 {
     public static class DbSelectItems
     {
-        private static OratorioContext db;
+        private static ApplicationContext db;
 
         public static List<SelectListItem> QuotePartecipazione()
         {
-            db = new OratorioContext();
+            db = new ApplicationContext();
             return db.QuotePartecipazione.Select(x => new SelectListItem { Text=x.Descrizione, Value=x.ID.ToString()}).ToList();
         }
 

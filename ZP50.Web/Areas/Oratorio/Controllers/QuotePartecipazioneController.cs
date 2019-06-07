@@ -11,9 +11,9 @@ using ZP50.Core.Oratorio;
 
 namespace ZP50.Web.Areas.Oratorio.Controllers
 {
-    public class QuotePartecipazioneController : Controller
+    public class QuotePartecipazioneController : BaseController
     {
-        private OratorioContext db = new OratorioContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: Oratorio/QuotePartecipazione
         public ActionResult Index()
@@ -47,7 +47,7 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         // Per ulteriori dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Descrizione,Costo")] QuotaPartecipazione quotaPartecipazione)
+        public ActionResult Create([Bind(Include = "ID,Categoria,Descrizione,Costo")] QuotaPartecipazione quotaPartecipazione)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         // Per ulteriori dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Descrizione,Costo")] QuotaPartecipazione quotaPartecipazione)
+        public ActionResult Edit([Bind(Include = "ID,Categoria,Descrizione,Costo")] QuotaPartecipazione quotaPartecipazione)
         {
             if (ModelState.IsValid)
             {

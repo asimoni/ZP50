@@ -2,38 +2,46 @@
 @{
     ViewBag.Title = "Contatti";
 }
-<h2>Partecipante</h2>
-<ul class="nav nav-pills mb-1">
-    <li class="nav-item ">
-        <a class="nav-link" href="@Url.Action("Edit", new { id = Model.ID })">Anagrafica</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link active" href="@Url.Action("Contatti", new { id = Model.ID })">Contatti</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link " href="@Url.Action("Quote", new { id = Model.ID })">Quote</a>
-    </li>
-</ul>
 
-<div class="list-group">
-    @foreach (var item in Model.Contatti)
-    {
-        <div class="list-group-item">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">@item.Cognome @item.Nome</h5>
-                <div>
-                    <a href="@Url.Action("ModificaContatto", new {contattoID=item.ID, partecipanteID=Model.ID})" class="btn btn-outline-secondary"><i class="fa fa-pencil"></i></a>
-                    <a href="@Url.Action("RimuoviContatto", new {contattoID=item.ID, partecipanteID=Model.ID})" class="btn btn-outline-secondary"><i class="fa fa-trash-o"></i></a>
-                </div>
+@using (Html.BeginForm())
+{
+    <div class="card">
+        <div class="card-body">
+            <h2>Partecipante</h2>
+            <ul class="nav nav-pills mb-1">
+                <li class="nav-item ">
+                    <a class="nav-link" href="@Url.Action("Edit", new { id = Model.ID })">Anagrafica</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="@Url.Action("Contatti", new { id = Model.ID })">Contatti</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="@Url.Action("Quote", new { id = Model.ID })">Quote</a>
+                </li>
+            </ul>
 
+            <div class="list-group">
+                @foreach (var item in Model.Contatti)
+                {
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@item.Cognome @item.Nome</h5>
+                            <div>
+                                <a href="@Url.Action("ModificaContatto", new { contattoID = item.ID, partecipanteID = Model.ID })" class="btn btn-outline-secondary"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("RimuoviContatto", new { contattoID = item.ID, partecipanteID = Model.ID })" class="btn btn-outline-secondary"><i class="fa fa-trash-o"></i></a>
+                            </div>
+
+                        </div>
+                        <div>
+                            <span><i class="fa fa-mobile"></i> @item.Telefono</span>
+                            <span><i class="fa fa-envelope-o"></i> @item.Email</span>
+                        </div>
+                    </div>
+                }
             </div>
-            <div>
-                <span><i class="fa fa-mobile"></i> @item.Telefono</span>
-                <span><i class="fa fa-envelope-o"></i> @item.Email</span>
+            <div class="m-1 d-flex flex-row-reverse">
+                <a href="@Url.Action("AggiungiContatto", new { partecipanteID = Model.ID })" class="btn btn-success"><i class="fa fa-plus"></i> Aggiungi</a>
             </div>
         </div>
-    }
-</div>
-<div class="m-1 d-flex flex-row-reverse">
-    <a href="@Url.Action("AggiungiContatto", new { partecipanteID = Model.ID })" class="btn btn-success"><i class="fa fa-plus"></i> Aggiungi</a>
-</div>
+    </div>
+}

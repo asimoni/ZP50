@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="Default Web Site/ZP50.Web_deploy" />
+  <setParameter name="DefaultConnection-Web.config Connection String" value="Server=62.149.153.63;Database=MSSql172396;User Id=MSSql172396;Password=i5642na48a;" />
+  <setParameter name="ApplicationContext-Web.config Connection String" value="Server=62.149.153.63;Database=MSSql172396;User Id=MSSql172396;Password=i5642na48a;" />
+</parameters>

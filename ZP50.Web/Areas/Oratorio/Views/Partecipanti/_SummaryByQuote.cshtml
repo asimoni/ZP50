@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ZP50.Web.Areas.Oratorio.Models.SummaryItem>
+<table>
+    <tbody>
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(item.Key, "Printable", new { Quota = item.Key })</td>
+            <td><span class="badge badge-secondary">@item.Qty</span></td>
+        </tr>
+
+}
+    </tbody>
+</table>

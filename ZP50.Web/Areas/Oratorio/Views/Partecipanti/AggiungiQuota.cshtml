@@ -1,41 +1,68 @@
-﻿@using ZP50.Web.Common.Helpers
-@using HtmlHelpers.BeginCollectionItem
+﻿
 
 @model ZP50.Web.Areas.Oratorio.Models.PartecipanteAggiungiQuotaModel
 
 @{
     ViewBag.Title = "AggiungiContatto";
+    var categorie = Model.QuoteDaAcquistare.Select(x => x.Categoria).Distinct();
 }
-
-<h2>Aggiungi Quota</h2>
-
 
 @using (Html.BeginForm("AggiungiQuota", "Partecipanti", FormMethod.Post))
 {
     @Html.AntiForgeryToken();
+    <div class="card">
+        <div class="card-body">
+            <h2>Aggiungi Quota</h2>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
+            <nav id="quote" class="navbar navbar-light bg-light">
+                <ul class="nav nav-pills">
+                    @foreach (var categoria in categorie)
+                    {
+                        var categoriaId = categoria.Replace(" ", "_");
+                        <li class="nav-item">
+                            <a class="nav-link" href="#@categoriaId">@categoria</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+            <div data-spy="scroll" data-target="#quote" data-offset="0" style="height:300px;position:relative;overflow-y:auto">
+                @foreach (var categoria in categorie)
+                {
+                    var categoriaId = categoria.Replace(" ", "_");
+                    <h4 id="@categoriaId">@categoria</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">#</th>
+                                <th style="width: 70%">Descrizione</th>
+                                <th style="width: 15%">Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.QuoteDaAcquistare.Where(x => x.Categoria == categoria))
+                            {
+                                @*<strong>bau</strong>*@
+                                @Html.Partial("_QuotaDaAcquistare", item);
 
-    Html.ValidationSummary(true, "", new { @class = "text-danger" });
+                            }
+                        </tbody>
+                    </table>
+                }
 
-    using (Html.BeginCollectionItem("QuoteDaAcquistare"))
-    {
-        <div class="list-group">
-            @foreach (var item in Model.QuoteDaAcquistare)
-            {
-                @*<strong>bau</strong>*@
-                @Html.Partial("_QuotaDaAcquistare", item);
+            </div>
 
-            }
+            @Html.HiddenFor(model => model.PartecipanteID)
         </div>
-    }
-
-    @Html.HiddenFor(model => model.PartecipanteID)
-    <hr />
-    <div class="d-flex justify-content-between">
-        @Html.ActionLink("Indietro", "Quote", new { id = Model.PartecipanteID })
-        <input type="submit" value="Salva" class="btn btn-primary" />
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                @Html.ActionLink("Indietro", "Quote", new { id = Model.PartecipanteID })
+                <input type="submit" value="Salva" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
+
 }
 
 

@@ -11,9 +11,9 @@ using ZP50.Core.Oratorio;
 
 namespace ZP50.Web.Areas.Oratorio.Controllers
 {
-    public class ContattiController : Controller
+    public class ContattiController : BaseController
     {
-        private OratorioContext db = new OratorioContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: Oratorio/Contatti
         public ActionResult Index()

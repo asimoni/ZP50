@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ZP50.Core.CentroAscolto.NucleoFamiliare>
+﻿@model ZP50.Web.Areas.CentroAscolto.Models.NucleoFamiliareListModel
 
 @{
     ViewBag.Title = "Nuclei familiari";
@@ -12,23 +12,23 @@
                 <table class="table">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Nome)
+                            Nome
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Residenza)
+                            Residenza
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DichiarazioneIsee)
+                            Dichiarazione Isee
                         </th>
 
                         <th>
-                            @Html.DisplayNameFor(model => model.AggiornataIl)
+                            Ultimo agg.
                         </th>
 
                         <th></th>
                     </tr>
 
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Items)
                     {
                         <tr>
                             <td>
@@ -65,8 +65,16 @@
     <div class="col-4">
         <div class="card">
             <div class="card-body">
+                @using(Html.BeginForm("Index", "NucleiFamiliari", FormMethod.Get, new { @class = "" }))
+                {
+                    @Html.EditorFor(model=>model.Filter)
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Applica</button>
+                    </div>
+                }
+                <hr />
                 <p>
-                    @Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-outline-success" })
                 </p>
             </div>
         </div>

@@ -24,6 +24,11 @@ namespace ZP50.Core.CentroAscolto
         [Display(Name ="Data nascita")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? DataNascita { get; set; }
+
+        [RegularExpression(@"1/^(?:(?:[B-DF-HJ-NP-TV-Z]|[AEIOU])[AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[1256LMRS][\dLMNP-V])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$", ErrorMessage = "Immettere un codice fiscale valido")]
+        public string CodiceFiscale { get; set; }
+        [Display(Name = "Nazionalità")]
+        public string Nazionalita { get; set; }
         public SessoType Sesso { get; set; }
         public DocumentoIdentita Documento { get; set; }
         public InfoOccupazione Occupazione { get; set; } = InfoOccupazione.Disoccupato();

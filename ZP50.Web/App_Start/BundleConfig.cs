@@ -48,7 +48,7 @@ namespace ZP50.Web
 
               bundles.Add(new StyleBundle("~/Content/site-css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/font-awesome.css",
+                      "~/Content/line-awesome-font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }

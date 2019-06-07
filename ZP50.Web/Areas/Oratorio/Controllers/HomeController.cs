@@ -6,7 +6,13 @@ using System.Web.Mvc;
 
 namespace ZP50.Web.Areas.Oratorio.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public abstract class BaseController: Controller
+    {
+
+    }
+
+    public class HomeController : BaseController
     {
         // GET: Oratorio/Home
         public ActionResult Index()

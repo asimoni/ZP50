@@ -12,16 +12,45 @@ using ZP50.Web.Areas.Oratorio.Models;
 
 namespace ZP50.Web.Areas.Oratorio.Controllers
 {
-    public class PartecipantiController : Controller
+    public class PartecipantiController : BaseController
     {
-        private OratorioContext db = new OratorioContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: Oratorio/Partecipanti
-        public ActionResult Index()
+        public ActionResult Index(PartecipanteFilterModel filter)
         {
-            return View(db.Partecipanti.ToList());
+            var items = db.Partecipanti.AsQueryable();
+            items = filter.Apply(items);
+            return View(new PartecipanteQueryResultModel
+            {
+                Items = items.ToList(),
+                Filter = filter
+            });
+
         }
 
+        public ActionResult Printable(PartecipanteFilterModel filter)
+        {
+            var items = db.Partecipanti.AsQueryable();
+            items = filter.Apply(items);
+            return View(new PartecipanteQueryResultModel
+            {
+                Items = items.ToList(),
+                Filter = filter
+            });
+
+        }
+
+        [ChildActionOnly]
+        public ActionResult SummaryByQuote()
+        {
+            var items = db.QuoteAcquistate.AsQueryable();
+            var summary = from r in items
+                     orderby r.QuotaPartecipazione.Descrizione
+                     group r by r.QuotaPartecipazione.Descrizione into grp
+                     select new SummaryItem { Key = grp.Key, Qty = grp.Count() }; ;
+            return PartialView("_SummaryByQuote", summary);
+        }
         // GET: Oratorio/Partecipanti/Details/5
         public ActionResult Details(int? id)
         {
@@ -29,7 +58,10 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Partecipante partecipante = db.Partecipanti.Find(id);
+            Partecipante partecipante = db.Partecipanti
+                .Include(p => p.QuoteAcquistate)
+                .Include(p => p.Contatti)
+                .First(x => x.ID == id);
             if (partecipante == null)
             {
                 return HttpNotFound();
@@ -47,8 +79,8 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         // Per proteggere da attacchi di overposting, abilitare le proprietà a cui eseguire il binding. 
         // Per ulteriori dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Cognome,DataNascita,Indirizzo,Annotazioni")] Partecipante partecipante)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Nome,Cognome,DataNascita,ClasseFrequentata,Indirizzo,Annotazioni")] Partecipante partecipante)
         {
             if (ModelState.IsValid)
             {
@@ -83,14 +115,18 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         // Per ulteriori dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Cognome,DataNascita,Indirizzo,Annotazioni, CodiceIdentificativo, QuoteAcquistate, Recapiti")] Partecipante partecipante)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Cognome,DataNascita,ClasseFrequentata,Indirizzo,Annotazioni, CodiceIdentificativo, QuoteAcquistate, Recapiti")] Partecipante partecipante)
         {
             if (ModelState.IsValid)
             {
-                db.Partecipanti.Attach(partecipante);
+
+                db.Entry(db.Partecipanti
+                  .First(x => x.ID == partecipante.ID))
+                  .CurrentValues.SetValues(partecipante);
+                //db.Partecipanti.Attach(partecipante);
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
             return View(partecipante);
         }
@@ -221,6 +257,7 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
                 PartecipanteID = partecipanteID,
                 QuoteDaAcquistare = quote.Except(quoteAcquistate).Select(x => new QuotaDaAcquistareModel
                 {
+                    Categoria = x.Categoria,
                     Descrizione = x.Descrizione,
                     Costo = x.Costo,
                     ID = x.ID
@@ -260,7 +297,6 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
                 {
                     QuotaPartecipazioneID = item.ID,
                     PartecipanteID = partecipante.ID,
-                    Versato = item.Versato
                 };
                 partecipante.QuoteAcquistate.Add(quota);
             }

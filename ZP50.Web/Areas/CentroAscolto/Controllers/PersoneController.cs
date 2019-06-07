@@ -13,12 +13,13 @@ namespace ZP50.Web.Areas.CentroAscolto.Controllers
 {
     public class PersoneController : Controller
     {
-        private CentroAscoltoContext db = new CentroAscoltoContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: CentroAscolto/Personas
         public ActionResult Index(Guid nucleoFamiliareId)
         {
             var items = db.Persone.Where(x => x.NucleoFamiliareID == nucleoFamiliareId).ToList();
+            ViewBag.NucleoFamiliareID = nucleoFamiliareId;
             return PartialView(items);
         }
 

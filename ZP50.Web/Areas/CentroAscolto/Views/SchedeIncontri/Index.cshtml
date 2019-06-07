@@ -1,51 +1,69 @@
-﻿@model IEnumerable<ZP50.Core.CentroAscolto.SchedaIncontro>
+﻿@using ZP50.Core.Misc
+@model ZP50.Web.Areas.CentroAscolto.Models.SchedaIncontroListModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                <h4>Schede incontri</h4>
+                <table class="table">
+                    <tr>
+                        <th>
+                            NucleoFamiliare
+                        </th>
+                        <th>
+                            Sintesi
+                        </th>
+                        <th>
+                            Creata il
+                        </th>
+                        <th>
+                            Creata da
+                        </th>
+                        <th></th>
+                    </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NucleoFamiliareID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sintesi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreataIl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreataDa)
-        </th>
-        <th></th>
-    </tr>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @item.NucleoFamiliare.Nome
+                            </td>
+                            <td>
+                                @item.Sintesi.Truncate(30)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreataIl)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreataDa)
+                            </td>
+                            <td>
+                                @Html.ActionLink("apri", "Edit", new { id = item.ID }) |
+                            </td>
+                        </tr>
+                    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NucleoFamiliareID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sintesi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreataIl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreataDa)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+                </table>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                @Html.EditorFor(model => model.Filter)
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+</div>
 
-</table>
+
+
+
+

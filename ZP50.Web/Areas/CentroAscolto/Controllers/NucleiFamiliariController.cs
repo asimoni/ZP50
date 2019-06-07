@@ -8,17 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using ZP50.Core.CentroAscolto;
 using ZP50.Core.DataLayer;
+using ZP50.Web.Areas.CentroAscolto.Models;
 
 namespace ZP50.Web.Areas.CentroAscolto.Controllers
 {
     public class NucleiFamiliariController : Controller
     {
-        private CentroAscoltoContext db = new CentroAscoltoContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: CentroAscolto/NucleiFamiliari
-        public ActionResult Index()
+        public ActionResult Index(NucleoFamiliareFilterModel filter)
         {
-            return View(db.NucleiFamiliari.ToList());
+            var items = db.NucleiFamiliari.AsQueryable();
+            items = filter.Apply(items);
+            return View(new NucleoFamiliareListModel
+            {
+                Items = items.ToList(),
+                Filter= filter
+            });
         }
 
         // GET: CentroAscolto/NucleiFamiliari/Details/5
@@ -61,7 +68,7 @@ namespace ZP50.Web.Areas.CentroAscolto.Controllers
 
                 db.NucleiFamiliari.Add(nucleoFamiliare);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = nucleoFamiliare.ID });
             }
 
             return View(nucleoFamiliare);
@@ -87,13 +94,14 @@ namespace ZP50.Web.Areas.CentroAscolto.Controllers
         // Per ulteriori dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Residenza,Annotazioni,CodiceIdentificativo,DichiarazioneIsee,CreataIl,CreataDa,AggiornataIl,AggiornataDa")] NucleoFamiliare nucleoFamiliare)
+        public ActionResult Edit([Bind(Include = "ID,Nome,Residenza,Annotazioni,CodiceIdentificativo,DichiarazioneIsee,AssistenteSociale,CreataIl,CreataDa,AggiornataIl,AggiornataDa")] NucleoFamiliare nucleoFamiliare)
         {
             if (ModelState.IsValid)
             {
+                nucleoFamiliare.AggiornataIl = DateTime.Now;
                 db.Entry(nucleoFamiliare).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = nucleoFamiliare.ID });
             }
             return View(nucleoFamiliare);
         }

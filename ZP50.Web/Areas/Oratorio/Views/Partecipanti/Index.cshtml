@@ -1,61 +1,83 @@
-﻿@model IEnumerable<ZP50.Core.Oratorio.Partecipante>
+﻿@model ZP50.Web.Areas.Oratorio.Models.PartecipanteQueryResultModel
 
 @{
     ViewBag.Title = "Partecipanti";
 }
+<div class="row">
+    <div class="col-md-9">
+        <div class="card">
 
-<div class="d-flex justify-content-between mb-2">
-<h2>@ViewBag.Title</h2>
-@Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-outline-success" })
-    </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cognome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataNascita)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Indirizzo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Annotazioni)
-        </th>
-        <th></th>
-    </tr>
+                        <h2>@ViewBag.Title <small class="badge badge-secondary">@Model.Items.Count()</small></h2>
+                        <div class="pull-right">
+                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#filters" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fa fa-filter"></i>
+                            </a>
+                            @Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-outline-success" })
 
-    @foreach (var item in Model)
+                        </div>
+                    </div>
+                    <div id="filters" class="collapse bg-light p-1">
+                        @using (Html.BeginForm("Index", "Partecipanti", FormMethod.Post, new { @class = "form-inline" }))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cognome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataNascita)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Indirizzo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Annotazioni)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
-    }
+                    @Html.EditorFor(model => Model.Filter)
+}
+                    </div>
 
-</table>
+                    @Html.Partial("_List", Model.Items)
+                </div>
+            </div>
+
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                @Html.Action("SummaryByQuote")
+            </div>
+        </div>
     </div>
 </div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#partecipanti').DataTable(
+                {
+                    responsive: true,
+                    lengthChange: false,
+                    language: {
+                        "sEmptyTable": "Nessun dato presente nella tabella",
+                        "sInfo": "Vista da _START_ a _END_ di _TOTAL_ elementi",
+                        "sInfoEmpty": "Vista da 0 a 0 di 0 elementi",
+                        "sInfoFiltered": "(filtrati da _MAX_ elementi totali)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "Visualizza _MENU_ elementi",
+                        "sLoadingRecords": "Caricamento...",
+                        "sProcessing": "Elaborazione...",
+                        "sSearch": "Cerca:",
+                        "sZeroRecords": "La ricerca non ha portato alcun risultato.",
+                        "oPaginate": {
+                            "sFirst": "Inizio",
+                            "sPrevious": "Precedente",
+                            "sNext": "Successivo",
+                            "sLast": "Fine"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
+                            "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+                        }
+                    }
+                }
+            );
+        });
+    </script>
+    
+    }
 

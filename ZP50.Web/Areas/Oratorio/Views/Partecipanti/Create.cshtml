@@ -1,65 +1,79 @@
-﻿@model ZP50.Core.Oratorio.Partecipante
+﻿@using ZP50.Web.Areas.Oratorio.Models
+@model ZP50.Core.Oratorio.Partecipante
 
 @{
     ViewBag.Title = "Create";
 }
+@using (Html.BeginForm())
+{
+    <div class="card">
+        <div class="card-body">
+            <h2>Partecipante <small>nuovo</small></h2>
 
 
 
-            <h2>Partecipante</h2>
-            <h4 class="card-subtitle mb-2 text-muted">Nuovo</h4>
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Cognome)
+                        @Html.EditorFor(model => model.Cognome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cognome, "", new { @class = "text-danger" })
+                    </div>                    
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Nome)
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DataNascita)
+
+                        @Html.EditorFor(model => model.DataNascita, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.DataNascita, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.ClasseFrequentata)
+
+                        @Html.DropDownListFor(model => model.ClasseFrequentata, ValueBundle.ClassiScolastiche, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ClasseFrequentata, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                @Html.EditorFor(model => model.Indirizzo, new { htmlAttributes = new { @class = "form-control" } })
 
 
-            @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Annotazioni)
 
-        <div class="form-horizontal">
+                    @Html.EditorFor(model => model.Annotazioni, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Annotazioni, "", new { @class = "text-danger" })
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Nome)
-                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Cognome)
-                    @Html.EditorFor(model => model.Cognome, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Cognome, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.DataNascita)
-
-                @Html.EditorFor(model => model.DataNascita, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataNascita, "", new { @class = "text-danger" })
 
             </div>
 
-            @Html.EditorFor(model => model.Indirizzo, new { htmlAttributes = new { @class = "form-control" } })
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Annotazioni)
-
-                @Html.EditorFor(model => model.Annotazioni, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Annotazioni, "", new { @class = "text-danger" })
-
-            </div>
-
+        </div>
+        <div class="card-footer">
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Salva" class="btn btn-default" />
                 </div>
             </div>
         </div>
+    </div>
+
 }
 
-            <div>
-                @Html.ActionLink("Back to List", "Index")
-            </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
 
 @section Scripts {

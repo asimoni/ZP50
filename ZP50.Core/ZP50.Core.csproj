@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,8 +63,10 @@
       <DependentUpon>201812132046429_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Misc\StringExtensions.cs" />
     <Compile Include="Oratorio\Iscrizione.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueBundle.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812132046429_InitialCreate.resx">

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Centro di ascolto - ZP50</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/site-css")
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-warning">
@@ -21,22 +21,17 @@
                     @Html.ActionLink("Nuclei Familiari", "Index", "NucleiFamiliari", new { Area = "CentroAscolto" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Persone", "Index", "Persone", new { Area = "CentroAscolto" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Schede", "Index", "SchedeIncontri", new { Area = "CentroAscolto" }, new { @class = "nav-link" })
                 </li>
-
-
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn my-2 my-sm-0" type="submit">Search</button>
-            </form>
+
         </div>
     </nav>
 
     <div class="container-fluid body-content p-1">
             @RenderBody()
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - ZP50</p>
         </footer>
     </div>
 

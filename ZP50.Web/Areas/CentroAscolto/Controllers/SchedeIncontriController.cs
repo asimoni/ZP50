@@ -8,18 +8,41 @@ using System.Web;
 using System.Web.Mvc;
 using ZP50.Core.CentroAscolto;
 using ZP50.Core.DataLayer;
+using ZP50.Web.Areas.CentroAscolto.Models;
 
 namespace ZP50.Web.Areas.CentroAscolto.Controllers
 {
     public class SchedeIncontriController : Controller
     {
-        private CentroAscoltoContext db = new CentroAscoltoContext();
+        private ApplicationContext db = new ApplicationContext();
 
         // GET: CentroAscolto/SchedeIncontri
-        public ActionResult Index()
+        public ActionResult Index(SchedaIncontroFilterModel filter)
         {
-            return View(db.SchedaIncontroes.ToList());
+            var queryable = db.SchedaIncontroes.AsQueryable();
+
+            queryable = filter.Apply(queryable);
+
+            var model = new SchedaIncontroListModel
+            {
+                Filter = filter,
+                Items = queryable.ToList()
+            };
+            return View(model);
         }
+
+        public ActionResult ByNucleo(Guid nucleoFamiliareId)
+        {
+            var items = db.SchedaIncontroes
+                .Where(x=> x.NucleoFamiliareID==nucleoFamiliareId)
+                .OrderByDescending(x=> x.CreataIl)
+                .Take(6);
+
+
+            return PartialView(items);
+        }
+
+
 
         // GET: CentroAscolto/SchedeIncontri/Details/5
         public ActionResult Details(Guid? id)
@@ -37,9 +60,13 @@ namespace ZP50.Web.Areas.CentroAscolto.Controllers
         }
 
         // GET: CentroAscolto/SchedeIncontri/Create
-        public ActionResult Create()
+        public ActionResult Create(Guid nucleoFamiliareId)
         {
-            return View();
+            return View(new SchedaIncontro
+            {
+                NucleoFamiliareID=nucleoFamiliareId,
+                CreataIl=DateTime.Today
+            });
         }
 
         // POST: CentroAscolto/SchedeIncontri/Create

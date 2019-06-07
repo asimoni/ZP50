@@ -16,8 +16,15 @@ namespace ZP50.Core.Oratorio
         public string Nome { get; set; }
         [Required]
         public string Cognome { get; set; }
+
         [Required]
-        public string DataNascita { get; set; }
+        [Display(Name ="Data di nascita")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime DataNascita { get; set; }
+
+        [Display(Name = "Classe frequentata")]
+        public string ClasseFrequentata { get; set; }
+
         public Indirizzo Indirizzo { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -41,9 +48,18 @@ namespace ZP50.Core.Oratorio
         public double Versato { get; set; }
     }
 
+
+    public class CategoriaQuota
+    {
+        public int ID { get; set; }
+        public string Nome { get; set; }
+    }
+
     public class QuotaPartecipazione
     {
         public int ID { get; set; }
+        [Required]
+        public string Categoria { get; set; }
         [Required]
         public string Descrizione { get; set; }
         [DataType(DataType.Currency)]

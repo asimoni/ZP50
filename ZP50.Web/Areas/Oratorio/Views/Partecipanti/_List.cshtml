@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ZP50.Core.Oratorio.Partecipante>
+<table class="table" id="partecipanti">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cognome) @Html.DisplayNameFor(model => model.Nome)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ClasseFrequentata)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Indirizzo)
+            </th>
+
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderBy(x => x.Cognome).ThenBy(x => x.Nome))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cognome) @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ClasseFrequentata)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Indirizzo)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit",  new { id = item.ID })" class="btn btn-outline-secondary"><i class="fa fa-pencil"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
