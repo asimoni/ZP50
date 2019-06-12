@@ -28,6 +28,17 @@ namespace ZP50.Web.Areas.Oratorio.Models
 
             }
         }
+        public static IEnumerable<SelectListItem> PresenzaStato
+        {
+            get
+            {
+                return new SelectListItem[]{
+                    new SelectListItem{Text="", Value=""},
+                    new SelectListItem{Text="Presente", Value="Presente"},
+                    new SelectListItem{Text="Uscito", Value="Uscito"}
+                };
+            }
+        }
         public static IEnumerable<SelectListItem> Quote
         {
             get

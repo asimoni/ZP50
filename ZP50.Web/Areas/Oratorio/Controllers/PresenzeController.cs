@@ -13,10 +13,72 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         private ApplicationContext db = new ApplicationContext();
 
         // GET: Oratorio/Presenze
-        public ActionResult Index()
+        public ActionResult Index(PresenzaFilterModel filter)
         {
-            var model = db.Presenze.Where(x => x.Giorno == DateTime.Today).ToList();
-            return View(model);
+            var items = db.Presenze.AsQueryable();
+            items = filter.Apply(items);
+            //var items = db.Presenze.Where(x => x.Giorno == DateTime.Today).ToList();
+            return View(new PresenzaQueryResultModel
+            {
+                Filter=filter,
+                Items=items.ToList()
+            });
+        }
+
+
+        public ActionResult IngressoManuale()
+        {
+            var presenze = db.Presenze.Where(x => x.Giorno == DateTime.Today).Select(x=> x.PartecipanteID).ToList();
+            
+            var partecipanti = db.Partecipanti.Where(x=> !presenze.Contains(x.ID)).ToList();
+            return View(partecipanti);
+        }
+
+        public ActionResult RegistraIngressoManuale(int id)
+        {
+            var partecipante = db.Partecipanti.FirstOrDefault(x => x.ID==id);
+
+            var presente = db.Presenze.Any(x => x.PartecipanteID == partecipante.ID && x.Giorno == DateTime.Today && !x.Uscita.HasValue);
+            if (presente)
+            {
+                ModelState.AddModelError("", $"{partecipante.Cognome} {partecipante.Nome} risulta già presente");
+                return View(new RegistraPresenzaModel());
+            }
+
+            ViewBag.Partecipante = partecipante;
+            db.Presenze.Add(new Core.Oratorio.Presenza
+            {
+                PartecipanteID = partecipante.ID,
+                Giorno = DateTime.Today,
+                Ingresso = DateTime.Now
+            });
+            db.SaveChanges();
+            return View("Ingresso", new RegistraPresenzaModel());
+        }
+
+        public ActionResult UscitaManuale()
+        {
+            var presenti = db.Presenze.Where(x => x.Giorno == DateTime.Today && x.Giorno == DateTime.Today && !x.Uscita.HasValue).ToList();
+
+            return View(presenti);
+        }
+
+        public ActionResult RegistraUscitaManuale(int id)
+        {
+
+            var presente = db.Presenze.FirstOrDefault(x => x.PartecipanteID == id && x.Giorno == DateTime.Today && !x.Uscita.HasValue);
+
+            var partecipante = presente.Partecipante;
+
+            ViewBag.Partecipante = partecipante;
+
+            presente.Uscita = DateTime.Now;
+            db.SaveChanges();
+
+            return View("Uscita", new RegistraPresenzaModel());
+
+            //return RedirectToAction("Index");
+
         }
 
         public ActionResult Ingresso()

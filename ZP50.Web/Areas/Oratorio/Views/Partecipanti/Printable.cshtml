@@ -17,10 +17,10 @@
             <a href="javascript:window.print();" class="btn btn-primary"><i class="fa fa-print"></i> Stampa</a>
         </div>
     </div>    <div class="card-body">
-        <h2>@Model.Filter.Quota</h2>
-        @foreach (var group in groups)
+        <h2 class="mb-3">@Model.Filter.Quota</h2>
+        @foreach (var group in groups.OrderBy(x=>x))
         {
-            <h4>@group</h4>
+            <h5>@group</h5>
             <table class="table">
                 <thead>
                     <tr>

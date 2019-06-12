@@ -1,23 +1,31 @@
-﻿@model IEnumerable<ZP50.Core.Oratorio.Presenza>
+﻿@model ZP50.Web.Areas.Oratorio.Models.PresenzaQueryResultModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Presenze";
 }
 
 
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between">
-            <h2>Presenze</h2>
+            <h2>@ViewBag.Title <small class="badge badge-secondary">@Model.Items.Count()</small></h2>
 
             <div>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#filters" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa fa-filter"></i>
+                </a>
                 <a href="@Url.Action("Ingresso")" class="btn btn-outline-success"><i class="fa fa-arrow-circle-o-down"></i>&nbsp;Ingresso</a>
                 <a href="@Url.Action("Uscita")" class="btn btn-outline-dark"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;Uscita</a>
             </div>
 
-        </div> 
+        </div>
 
-
+        <div id="filters" class="collapse bg-light p-1">
+            @using (Html.BeginForm("Index", "Presenze", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.EditorFor(model => Model.Filter)
+    }
+        </div>
 
         <table class="table" id="presenze">
             <thead>
@@ -29,34 +37,34 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Partecipante.Cognome @item.Partecipante.Nome</td>
-                        <td>@item.Ingresso.ToShortTimeString()</td>
-                        <td>
-                            @if (item.Uscita.HasValue)
-                            {
-                                @item.Uscita.Value.ToShortTimeString()
-                            }
-                            else
-                            {
-                                <span>--:-- </span>
-                            }
-                        </td>
-                        <td>
-                            @if (!item.Uscita.HasValue)
-    {
-                        <span class="badge badge-success">PRESENTE</span>
-}
-else
-{
-                        <span class="badge badge-warning">USCITO</span>
-}
-                                            </td>
-                    </tr>
-
+                @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Partecipante.Cognome @item.Partecipante.Nome</td>
+                    <td>@item.Ingresso.ToShortTimeString()</td>
+                    <td>
+                        @if (item.Uscita.HasValue)
+                    {
+                        @item.Uscita.Value.ToShortTimeString()
                 }
+                else
+                {
+                    <span>--:-- </span>
+            }
+                    </td>
+                    <td>
+                        @if (!item.Uscita.HasValue)
+                    {
+                        <span class="badge badge-success">PRESENTE</span>
+                }
+                else
+                {
+                    <span class="badge badge-warning">USCITO</span>
+            }
+                    </td>
+                </tr>
+
+        }
             </tbody>
         </table>
 

@@ -84,6 +84,11 @@ namespace ZP50.Web.Areas.Oratorio.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(db.Partecipanti.Any(x=> x.Cognome==partecipante.Cognome && x.Nome==partecipante.Nome && x.DataNascita == partecipante.DataNascita)){
+                    ModelState.AddModelError("", "Esiste già un partecipante con questi dati");
+                    return View(partecipante);
+                }
+
                 db.Partecipanti.Add(partecipante);
                 db.SaveChanges();
                 return RedirectToAction("Index");

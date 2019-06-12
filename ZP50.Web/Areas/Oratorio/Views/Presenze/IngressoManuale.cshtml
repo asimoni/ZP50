@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ZP50.Core.Oratorio.Partecipante>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h2>Ingresso manuale</h2>
+        </div>
+        <table class="table" id="partecipanti">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cognome) @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClasseFrequentata)
+                    </th>
+
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderBy(x => x.Cognome).ThenBy(x => x.Nome))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cognome) @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClasseFrequentata)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("RegistraIngressoManuale",  new { id = item.ID })" class="btn btn-outline-secondary"><i class="fa fa-arrow-circle-o-down"></i></a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#partecipanti').DataTable(
+                {
+                    responsive: true,
+                    lengthChange: false,
+                    language: {
+                        "sEmptyTable": "Nessun dato presente nella tabella",
+                        "sInfo": "Vista da _START_ a _END_ di _TOTAL_ elementi",
+                        "sInfoEmpty": "Vista da 0 a 0 di 0 elementi",
+                        "sInfoFiltered": "(filtrati da _MAX_ elementi totali)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "Visualizza _MENU_ elementi",
+                        "sLoadingRecords": "Caricamento...",
+                        "sProcessing": "Elaborazione...",
+                        "sSearch": "Cerca:",
+                        "sZeroRecords": "La ricerca non ha portato alcun risultato.",
+                        "oPaginate": {
+                            "sFirst": "Inizio",
+                            "sPrevious": "Precedente",
+                            "sNext": "Successivo",
+                            "sLast": "Fine"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
+                            "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+                        }
+                    }
+                }
+            );
+        });
+    </script>
+
+}

@@ -4,48 +4,111 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Contatti</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cognome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cognome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<div class="card">
+    <div class="card-body">
+        <div id="custom-search-input">
+            <div class="input-group">
+                <input type="text" class="search-query form-control" placeholder="Cerca" id="custom_search"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <table class="table" id="contatti">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cognome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cognome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+        }
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var dataTable = $('#contatti').DataTable(
+                {
+                    dom: '<"top"i>rt<"bottom"><"clear">',
+                    responsive: true,
+                    lengthChange: false,
+                    language: {
+                        "sEmptyTable": "Nessun dato presente nella tabella",
+                        "sInfo": "Vista da _START_ a _END_ di _TOTAL_ elementi",
+                        "sInfoEmpty": "Vista da 0 a 0 di 0 elementi",
+                        "sInfoFiltered": "(filtrati da _MAX_ elementi totali)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "Visualizza _MENU_ elementi",
+                        "sLoadingRecords": "Caricamento...",
+                        "sProcessing": "Elaborazione...",
+                        "sSearch": "Cerca:",
+                        "sZeroRecords": "La ricerca non ha portato alcun risultato.",
+                        "oPaginate": {
+                            "sFirst": "Inizio",
+                            "sPrevious": "Precedente",
+                            "sNext": "Successivo",
+                            "sLast": "Fine"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
+                            "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+                        }
+                    }
+                }
+            );
+            $('#custom_search').keyup(function () {
+                dataTable.search($(this).val()).draw();
+            })
+        });
+    </script>
+
 }
 
-</table>

@@ -7,28 +7,32 @@
     <div class="col-md-9">
         <div class="card">
 
-                <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
 
-                        <h2>@ViewBag.Title <small class="badge badge-secondary">@Model.Items.Count()</small></h2>
-                        <div class="pull-right">
-                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#filters" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <i class="fa fa-filter"></i>
-                            </a>
-                            @Html.ActionLink("Crea nuovo", "Create", null, new { @class = "btn btn-outline-success" })
+                    <h2>@ViewBag.Title <small class="badge badge-secondary">@Model.Items.Count()</small></h2>
+                    <div class="pull-right">
+                        <a class="btn btn-outline-primary" data-toggle="collapse" href="#filters" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-filter"></i>
+                        </a>
+                        <a class="btn btn-outline-success" href="@Url.Action("Create")" role="button">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
 
-                        </div>
+
+
                     </div>
-                    <div id="filters" class="collapse bg-light p-1">
-                        @using (Html.BeginForm("Index", "Partecipanti", FormMethod.Post, new { @class = "form-inline" }))
-    {
-                    @Html.EditorFor(model => Model.Filter)
-}
-                    </div>
-
-                    @Html.Partial("_List", Model.Items)
                 </div>
+                <div id="filters" class="collapse bg-light p-1">
+                    @using (Html.BeginForm("Index", "Partecipanti", FormMethod.Post, new { @class = "form-inline" }))
+                    {
+                        @Html.EditorFor(model => Model.Filter)
+                    }
+                </div>
+
+                @Html.Partial("_List", Model.Items)
             </div>
+        </div>
 
     </div>
     <div class="col-md-3">
@@ -78,6 +82,6 @@
             );
         });
     </script>
-    
-    }
+
+}
 

@@ -1,0 +1,20 @@
+﻿@using ZP50.Web.Areas.Oratorio.Models;
+@model IEnumerable<SummaryItem>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="count_items">@item.Qty</div>
+                <div class="font-weight-light text-center text-truncate">@item.Key</div>
+                <hr />
+                @Html.ActionLink("vai a elenco", "Printable", "Partecipanti", new { Quota = item.Key },null)
+            </div>
+        </div>
+    }
+
+</div>
